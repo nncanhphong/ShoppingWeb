@@ -1,0 +1,132 @@
+﻿@model ProductSearchInput
+@{
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <aside class="col-lg-3 col-md-4 mb-4">
+            <div class="card shadow border-0">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Tìm kiếm mặt hàng</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Search Form -->
+                    <form id="frmSearchInput" action="~/Product/Search" method="get">
+                        <input type="hidden" name="@nameof(Model.PageSize)" value="@Model.PageSize" />
+
+                        <!-- Category Filter -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Loại hàng:</label>
+                            <select class="form-select" name="@nameof(Model.CategoryID)">
+                                <option value="0">-- Chọn loại hàng --</option>
+                                @foreach (var item in CommonDataService.ListOfCategories())
+                                {
+                                    if (item.CategoryID == Model.CategoryID)
+                                    {
+                                        <option value="@item.CategoryID" selected>@item.CategoryName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.CategoryID">@item.CategoryName</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        </div>
+
+                        <!-- Supplier Filter -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nhà cung cấp:</label>
+                            <select class="form-select" name="@nameof(Model.SupplierID)">
+                                <option value="0">-- Chọn nhà cung cấp --</option>
+                                @foreach (var item in CommonDataService.ListOfSuppliers())
+                                {
+                                    if (item.SupplierID == Model.SupplierID)
+                                    {
+                                        <option value="@item.SupplierID" selected>@item.SupplierName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.SupplierID">@item.SupplierName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Price Range -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Giá từ:</label>
+                            <input type="text" class="form-control number-separator" name="@nameof(Model.MinPrice)" value="@Model.MinPrice" placeholder="Từ">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Đến:</label>
+                            <input type="text" class="form-control number-separator" name="@nameof(Model.MaxPrice)" value="@Model.MaxPrice" placeholder="Đến">
+                        </div>
+
+                        <!-- Search Field -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tên mặt hàng:</label>
+                            <div class="input-group">
+                                <input name="@nameof(Model.SearchValue)" value="@Model.SearchValue" type="text" class="form-control" placeholder="Nhập tên mặt hàng">
+                                <button class="btn btn-success" type="submit">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="col-lg-9 col-md-8">
+            <div id="spinner" class="text-center mt-4" style="display: none;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <!-- Search Result Section -->
+            <div id="searchResult" class="mt-4"></div>
+        </main>
+    </div>
+</div>
+@section scripts {
+    <script>
+        function doSearch(page) {
+            var searchCondition = $("#frmSearchInput").serializeArray();
+            searchCondition.push({ name: "page", value: page });
+
+            var action = $("#frmSearchInput").prop("action");
+            var method = $("#frmSearchInput").prop("method");
+
+            // Show spinner
+            $("#spinner").show();
+
+            $.ajax({
+                url: action,
+                type: method,
+                data: searchCondition,
+                success: function (data) {
+                    $("#searchResult").html(data);
+                },
+                error: function () {
+                    $("#searchResult").html('<div class="alert alert-danger">An error occurred while fetching the data.</div>');
+                },
+                complete: function () {
+                    // Hide spinner
+                    $("#spinner").hide();
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            doSearch(@Model.Page);
+            $("#frmSearchInput").submit(function (e) {
+                e.preventDefault();
+                doSearch(1);
+            });
+        });
+    </script>
+}

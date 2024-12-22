@@ -1,0 +1,69 @@
+﻿@{
+    int customerID = Convert.ToInt32(User.GetUserData()?.UserId);
+    var orderHistory = OrderDataService.OrderHistory(customerID);
+}
+<div class="container mt-4">
+    @if (orderHistory.Any())
+    {
+        @foreach (var item in orderHistory)
+        {
+
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Chi tiết đơn hàng</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Column 1 -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="fw-bold">Tên khách hàng:</label>
+                                <p class="form-control-plaintext">@item.CustomerName</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold">Số điện thoại:</label>
+                                <p class="form-control-plaintext">@item.CustomerPhone</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold">Địa chỉ nhận hàng:</label>
+                                <p class="form-control-plaintext">@item.DeliveryAddress</p>
+                            </div>
+                        </div>
+
+                        <!-- Column 2 -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="fw-bold">Thành phố:</label>
+                                <p class="form-control-plaintext">@item.DeliveryProvince</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold">Trạng thái đơn hàng:</label>
+                                <span class="badge
+                                @(item.Status == 1 ? "bg-warning text-dark" :
+                                  item.Status == 2 ? "bg-primary" :
+                                  item.Status == 3 ? "bg-info text-white" :
+                                  item.Status == 4 ? "bg-success" :
+                                  item.Status == -1 ? "bg-danger" :
+                                  item.Status == -2 ? "bg-dark text-white" : "bg-secondary")">
+                                    @(item.Status == 1 ? "Khởi tạo" :
+                                        item.Status == 2 ? "Đã chấp nhận" :
+                                        item.Status == 3 ? "Đang giao hàng" :
+                                        item.Status == 4 ? "Hoàn thành" :
+                                        item.Status == -1 ? "Đã hủy" :
+                                        item.Status == -2 ? "Từ chối" : "Không xác định")
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            Không có đơn hàng nào trong lịch sử.
+        </div>
+    }
+
+</div>
