@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SV21T1020581.BusinessLayers;
 using SV21T1020581.DomainModels;
 using SV21T1020581.Shop.Models;
+using System.Net.WebSockets;
 
 namespace SV21T1020581.Shop.Controllers
 {
@@ -105,6 +106,7 @@ namespace SV21T1020581.Shop.Controllers
                 });
             }
             int orderID = OrderDataService.InitOrder(BOT_EMPLOYEE, customerID, city, address, orderDetails);
+            var data = OrderDataService.GetOrder(orderID);
             return View("OrderStatus");
         }
 
@@ -115,7 +117,28 @@ namespace SV21T1020581.Shop.Controllers
         /// <returns></returns>
         public IActionResult OrderStatus()
         {
-            return View();
+            int customerID = Convert.ToInt32(User.GetUserData()?.UserId);
+            var orderHistory = OrderDataService.OrderHistory(customerID);
+
+            if(orderHistory == null)
+            {
+                return View();
+            }
+
+            var listDetail = new List<OrderDetailModel>();
+
+            foreach(var item in orderHistory)
+            {
+                var order = OrderDataService.GetOrder(item.OrderID);
+                var orderDetails = OrderDataService.ListOrderDetails(item.OrderID);
+
+                var orderDetailModel = new OrderDetailModel() { Order = order, Details = orderDetails };
+                listDetail.Add(orderDetailModel);
+            }
+
+            var data = new ListOrderDetailModel() { CustomerID = customerID, ListOrder = listDetail };
+
+            return View(data);
         }
         /// <summary>
         /// Thông tin thanh toán: bao gồm hoá đơn và thông tin vận chuyển
@@ -125,6 +148,21 @@ namespace SV21T1020581.Shop.Controllers
         {
             var shoppingCart = GetShoppingCart();
             return View(shoppingCart);
+        }
+
+        public IActionResult Details(int id = 0)
+        {
+            var order = OrderDataService.GetOrder(id);
+            if (order == null)
+                return RedirectToAction("Index", "Home");
+            var detail = OrderDataService.ListOrderDetails(id);
+            var model = new OrderDetailModel()
+            {
+                Order = order,
+                Details = detail
+            };
+
+            return View(model);
         }
     }
 }

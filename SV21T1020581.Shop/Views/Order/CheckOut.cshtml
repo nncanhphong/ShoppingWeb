@@ -6,19 +6,21 @@
 <div class="row mt-4">
     <!-- Left Section: Customer Information -->
     <div class="col-lg-7 mb-4">
-        <div class="card">
-            <div class="card-header bg-light">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">Thông tin khách hàng</h5>
             </div>
             <div class="card-body">
                 <form action="~/Order/Payment" method="post">
+                    <!-- Address Input -->
                     <div class="mb-3">
-                        <label for="address" class="form-label">Địa chỉ</label>
-                        <input type="text" name="address" class="form-control" placeholder="Nhập địa chỉ" required>
+                        <label for="address" class="form-label fw-bold">Địa chỉ</label>
+                        <input type="text" name="address" id="address" class="form-control" placeholder="Nhập địa chỉ" required>
                     </div>
+                    <!-- City Dropdown -->
                     <div class="mb-3">
-                        <label for="city" class="form-label">Thành phố</label>
-                        <select name="city" class="form-select" required>
+                        <label for="city" class="form-label fw-bold">Thành phố</label>
+                        <select name="city" id="city" class="form-select" required>
                             <option value="" selected>-- Chọn thành phố --</option>
                             @foreach (var item in CommonDataService.ListOfProvinces())
                             {
@@ -26,7 +28,8 @@
                             }
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Xác nhận</button>
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-success w-100">Xác nhận</button>
                 </form>
             </div>
         </div>
@@ -34,8 +37,8 @@
 
     <!-- Right Section: Order Summary -->
     <div class="col-lg-5">
-        <div class="card">
-            <div class="card-header bg-light">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">Đơn hàng của bạn</h5>
             </div>
             <div class="card-body">
@@ -45,18 +48,23 @@
                         @foreach (var item in Model)
                         {
                             sumOfPrice += item.TotalPrice;
+
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="mb-1">@item.ProductName</h6>
-                                    <small class="text-muted">Số lượng: @item.Quantity</small>
+                                <div class="d-flex align-items-center">
+                                    <img src="http://localhost:5028/images/products/@(string.IsNullOrWhiteSpace(item.Photo) ? "no-image.jpg" : item.Photo)"
+                                         class="rounded" alt="@item.ProductName" style="object-fit: cover; height: 50px; width: 50px; margin-right: 10px;">
+                                    <div>
+                                        <h6 class="mb-0">@item.ProductName</h6>
+                                        <small class="text-muted">Số lượng: @item.Quantity</small>
+                                    </div>
                                 </div>
-                                <span>@item.TotalPrice.ToString("N0") ₫</span>
+                                <span class="fw-bold">@item.TotalPrice.ToString("N0") ₫</span>
                             </li>
                         }
                     </ul>
                     <div class="d-flex justify-content-between">
                         <strong>Tổng cộng:</strong>
-                        <span class="fw-bold">@sumOfPrice.ToString("N0") ₫</span>
+                        <span class="fw-bold text-primary">@sumOfPrice.ToString("N0") ₫</span>
                     </div>
                 }
                 else
@@ -67,4 +75,3 @@
         </div>
     </div>
 </div>
-

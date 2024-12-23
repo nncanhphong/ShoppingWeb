@@ -8,6 +8,7 @@
         <thead class="table-primary">
             <tr>
                 <th class="text-center">STT</th>
+                <th class="text-center">Ảnh</th>
                 <th class="text-center">Tên hàng</th>
                 <th class="text-center">ĐVT</th>
                 <th class="text-center">Số lượng</th>
@@ -24,6 +25,10 @@
                     sumOfPrice += item.TotalPrice;
                     <tr>
                         <td class="text-center">@(++stt)</td>
+                        <td>
+                            <img src="http://localhost:5028/images/products/@(string.IsNullOrWhiteSpace(item.Photo) ? "no-image.jpg" : item.Photo)"
+                                 class="card-img-top" alt="@item.ProductName" style="object-fit: cover; height: 50px;">
+                        </td>
                         <td>@item.ProductName</td>
                         <td class="text-center">@item.Unit</td>
                         <td class="text-center">@item.Quantity</td>

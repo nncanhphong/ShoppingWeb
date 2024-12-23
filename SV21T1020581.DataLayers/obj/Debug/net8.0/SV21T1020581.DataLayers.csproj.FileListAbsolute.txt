@@ -13,3 +13,4 @@ D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.DataLayers\obj\Debug\net8.0\SV21T
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.DataLayers\obj\Debug\net8.0\refint\SV21T1020581.DataLayers.dll
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.DataLayers\obj\Debug\net8.0\SV21T1020581.DataLayers.pdb
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.DataLayers\obj\Debug\net8.0\ref\SV21T1020581.DataLayers.dll
+D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.DataLayers\obj\Debug\net8.0\SV21T1020581.DataLayers.sourcelink.json

@@ -74,3 +74,4 @@ D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\refint\SV21
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\SV21T1020581.Shop.pdb
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\SV21T1020581.Shop.genruntimeconfig.cache
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\ref\SV21T1020581.Shop.dll
+D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\SV21T1020581.Shop.sourcelink.json

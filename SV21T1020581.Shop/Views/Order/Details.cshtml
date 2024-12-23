@@ -1,0 +1,125 @@
+﻿@using System.Globalization
+@model OrderDetailModel
+@{
+    int ordinalNumOfProduct = 1;
+    decimal invoice = 0;
+    int? status = Model.Order?.Status;
+}
+
+<div class="container mt-4">
+    <!-- Order Information -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-primary text-white d-flex align-items-center">
+            <h4 class="mb-0">
+                <i class="bi bi-card-checklist me-2"></i>Thông tin đơn hàng
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!-- Left Column -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <span class="fw-bold"><i class="bi bi-receipt-cutoff text-primary me-2"></i>Mã đơn hàng:</span>
+                        <span class="float-end">@Model?.Order?.OrderID</span>
+                    </div>
+                    <div class="mb-3">
+                        <span class="fw-bold"><i class="bi bi-calendar3 text-primary me-2"></i>Ngày lập đơn hàng:</span>
+                        <span class="float-end">@Model?.Order?.OrderTime.ToString("dd/MM/yyyy HH:mm:ss")</span>
+                    </div>
+                    <div class="mb-3">
+                        <span class="fw-bold"><i class="bi bi-person-fill text-primary me-2"></i>Nhân viên phụ trách:</span>
+                        <span class="float-end">@Model?.Order?.EmployeeName</span>
+                    </div>
+                    <div class="mb-3">
+                        <span class="fw-bold"><i class="bi bi-box-arrow-in-down text-primary me-2"></i>Ngày nhận đơn hàng:</span>
+                        <span class="float-end">@Model?.Order?.AcceptTime?.ToString("dd/MM/yyyy HH:mm:ss")</span>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <span class="fw-bold"><i class="bi bi-person-circle text-primary me-2"></i>Khách hàng:</span>
+                        <span class="float-end">@Model?.Order?.CustomerName</span>
+                    </div>
+                    <div class="mb-3">
+                        <span class="fw-bold"><i class="bi bi-envelope-fill text-primary me-2"></i>Email:</span>
+                        <span class="float-end">@Model?.Order?.CustomerEmail</span>
+                    </div>
+                    <div class="mb-3">
+                        <span class="fw-bold"><i class="bi bi-geo-alt text-primary me-2"></i>Địa chỉ giao hàng:</span>
+                        <span class="float-end">@Model?.Order?.DeliveryAddress</span>
+                    </div>
+                    <div class="mb-3">
+                        <span class="fw-bold"><i class="bi bi-shield-check text-primary me-2"></i>Trạng thái đơn hàng:</span>
+                        <span class="badge
+                            @(status == 1 ? "bg-warning text-dark" :
+                              status == 2 ? "bg-primary" :
+                              status == 3 ? "bg-info text-white" :
+                              status == 4 ? "bg-success" :
+                              status == -1 ? "bg-danger" :
+                              status == -2 ? "bg-dark text-white" : "bg-secondary") float-end">
+                            @(status == 1 ? "Khởi tạo" :
+                                status == 2 ? "Đã chấp nhận" :
+                                status == 3 ? "Đang giao hàng" :
+                                status == 4 ? "Hoàn thành" :
+                                status == -1 ? "Đã hủy" :
+                                status == -2 ? "Từ chối" : "Không xác định")
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product List -->
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Danh sách mặt hàng thuộc đơn hàng</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="bg-primary text-white">
+                        <tr>
+                            <th class="text-center" style="width: 5%;">STT</th>
+                            <th class="text-center">Ảnh</th>
+                            <th class="text-center">Tên hàng</th>
+                            <th class="text-center" style="width: 10%;">ĐVT</th>
+                            <th class="text-center" style="width: 10%;">Số lượng</th>
+                            <th class="text-end" style="width: 15%;">Giá</th>
+                            <th class="text-end" style="width: 15%;">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in OrderDataService.ListOrderDetails(Model.Order.OrderID))
+                        {
+                            <tr>
+                                <td class="text-center">@ordinalNumOfProduct</td>
+                                <td>
+                                    <img src="http://localhost:5028/images/products/@(string.IsNullOrWhiteSpace(item.Photo) ? "no-image.jpg" : item.Photo)"
+                                         class="img-fluid rounded shadow-sm"
+                                         style="object-fit: cover; height: 50px; width: 50px;">
+                                </td>
+                                <td>@item.ProductName</td>
+                                <td class="text-center">@item.Unit</td>
+                                <td class="text-center">@item.Quantity</td>
+                                <td class="text-end">@item.SalePrice.ToString("N0", CultureInfo.InvariantCulture)</td>
+                                <td class="text-end">@item.TotalPrice.ToString("N0", CultureInfo.InvariantCulture)</td>
+                            </tr>
+                            ordinalNumOfProduct++;
+                            invoice += item.TotalPrice;
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="5" class="text-end">Tổng cộng:</th>
+                            <th class="text-end">@invoice.ToString("N0", CultureInfo.InvariantCulture)</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

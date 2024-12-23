@@ -1,60 +1,75 @@
-﻿@{
-    int customerID = Convert.ToInt32(User.GetUserData()?.UserId);
-    var orderHistory = OrderDataService.OrderHistory(customerID);
+﻿@model ListOrderDetailModel
+@{
 }
-<div class="container mt-4">
-    @if (orderHistory.Any())
-    {
-        @foreach (var item in orderHistory)
-        {
 
-            <div class="card shadow mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Chi tiết đơn hàng</h5>
-                </div>
+<div class="container mt-4">
+    @if (Model.ListOrder.Any())
+    {
+        @foreach (var item in Model.ListOrder)
+        {
+            <div class="card shadow mb-4 position-relative">
+                <!-- Card Body -->
                 <div class="card-body">
                     <div class="row">
-                        <!-- Column 1 -->
-                        <div class="col-md-6">
+                        <!-- Column 1: Image -->
+                        <div class="col-md-3 text-center">
+                            <div class="mb-3">
+                                <label class="fw-bold">Mặt hàng:</label>
+                                <p class="form-control-plaintext">@item?.Details?.FirstOrDefault()?.ProductName</p>
+                            </div>
+                            <img src="http://localhost:5028/images/products/@(string.IsNullOrWhiteSpace(item?.Details?.FirstOrDefault()?.Photo) ? "no-image.jpg" : item?.Details?.FirstOrDefault()?.Photo)"
+                                 class="img-fluid rounded shadow-sm" alt="@item?.Details?.FirstOrDefault()?.ProductName"
+                                 style="object-fit: cover; height: 150px; width: 150px;">
+                            
+                        </div>
+
+                        <!-- Column 2: Customer Information -->
+                        <div class="col-md-5">
                             <div class="mb-3">
                                 <label class="fw-bold">Tên khách hàng:</label>
-                                <p class="form-control-plaintext">@item.CustomerName</p>
+                                <p class="form-control-plaintext">@item?.Order?.CustomerName</p>
                             </div>
                             <div class="mb-3">
                                 <label class="fw-bold">Số điện thoại:</label>
-                                <p class="form-control-plaintext">@item.CustomerPhone</p>
+                                <p class="form-control-plaintext">@item?.Order?.CustomerPhone</p>
                             </div>
                             <div class="mb-3">
                                 <label class="fw-bold">Địa chỉ nhận hàng:</label>
-                                <p class="form-control-plaintext">@item.DeliveryAddress</p>
+                                <p class="form-control-plaintext">@item?.Order?.DeliveryAddress</p>
                             </div>
                         </div>
 
-                        <!-- Column 2 -->
-                        <div class="col-md-6">
+                        <!-- Column 3: Order Details -->
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label class="fw-bold">Thành phố:</label>
-                                <p class="form-control-plaintext">@item.DeliveryProvince</p>
+                                <p class="form-control-plaintext">@item?.Order?.DeliveryProvince</p>
                             </div>
                             <div class="mb-3">
                                 <label class="fw-bold">Trạng thái đơn hàng:</label>
                                 <span class="badge
-                                @(item.Status == 1 ? "bg-warning text-dark" :
-                                  item.Status == 2 ? "bg-primary" :
-                                  item.Status == 3 ? "bg-info text-white" :
-                                  item.Status == 4 ? "bg-success" :
-                                  item.Status == -1 ? "bg-danger" :
-                                  item.Status == -2 ? "bg-dark text-white" : "bg-secondary")">
-                                    @(item.Status == 1 ? "Khởi tạo" :
-                                        item.Status == 2 ? "Đã chấp nhận" :
-                                        item.Status == 3 ? "Đang giao hàng" :
-                                        item.Status == 4 ? "Hoàn thành" :
-                                        item.Status == -1 ? "Đã hủy" :
-                                        item.Status == -2 ? "Từ chối" : "Không xác định")
+                                @(item?.Order?.Status == 1 ? "bg-warning text-dark" :
+                                  item?.Order?.Status == 2 ? "bg-primary" :
+                                  item?.Order?.Status == 3 ? "bg-info text-white" :
+                                  item?.Order?.Status == 4 ? "bg-success" :
+                                  item?.Order?.Status == -1 ? "bg-danger" :
+                                  item?.Order?.Status == -2 ? "bg-dark text-white" : "bg-secondary")">
+                                    @(item?.Order?.Status == 1 ? "Khởi tạo" :
+                                        item?.Order?.Status == 2 ? "Đã chấp nhận" :
+                                        item?.Order?.Status == 3 ? "Đang giao hàng" :
+                                        item?.Order?.Status == 4 ? "Hoàn thành" :
+                                        item?.Order?.Status == -1 ? "Đã hủy" :
+                                        item?.Order?.Status == -2 ? "Từ chối" : "Không xác định")
                                 </span>
                             </div>
                         </div>
                     </div>
+                </div>
+                <!-- View Details Button -->
+                <div class="card-footer bg-light d-flex justify-content-end">
+                    <a href="~/Order/Details/@item?.Order?.OrderID" class="btn btn-sm btn-primary">
+                        Xem chi tiết
+                    </a>
                 </div>
             </div>
         }
@@ -65,5 +80,4 @@
             Không có đơn hàng nào trong lịch sử.
         </div>
     }
-
 </div>
