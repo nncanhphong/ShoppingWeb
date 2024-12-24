@@ -50,18 +50,13 @@ namespace SV21T1020581.Shop.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
         public async Task<IActionResult> Logout()
         {
             HttpContext.Session.Clear();
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
-
-        /// <summary>
-        /// Đăng kí tài khoản
-        /// </summary>
-        /// <returns></returns>
+        [AllowAnonymous]
         public IActionResult Create()
         {
             var data = new Customer()
@@ -69,13 +64,9 @@ namespace SV21T1020581.Shop.Controllers
                 CustomerID = 0,
                 IsLocked = false
             };
+            
             return View("Edit", data);
         }
-
-        /// <summary>
-        /// Thay đổi thông tin tài khoản
-        /// </summary>
-        /// <returns></returns>
         public IActionResult Edit(int id = 0)
         {
             var data = CommonDataService.GetCustomer(id);
@@ -85,7 +76,7 @@ namespace SV21T1020581.Shop.Controllers
             }
             return View(data);
         }
-
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Save(Customer data)
         {
@@ -133,6 +124,10 @@ namespace SV21T1020581.Shop.Controllers
                     ModelState.AddModelError(nameof(data.Email), "Email bị trùng");
                     return View("Edit", data);
                 }
+
+                var customer = CommonDataService.GetCustomer(id);
+
+                return View("Register", customer?.Email);
             }
             else
             {
@@ -148,10 +143,10 @@ namespace SV21T1020581.Shop.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-    /// <summary>
-    /// Đổi mật khẩu
-    /// </summary>
-    /// <returns></returns>
+        /// <summary>
+        /// Đổi mật khẩu
+        /// </summary>
+        /// <returns></returns>
         public IActionResult ChangePassword()
         {
             return View();
@@ -172,7 +167,7 @@ namespace SV21T1020581.Shop.Controllers
             {
                 return View();
             }
-            bool isChangedPassword = UserAccountService.ChangePassword(UserTypes.Employee, userName, newPassword);
+            bool isChangedPassword = UserAccountService.ChangePassword(UserTypes.Customer, userName, newPassword);
             if (isChangedPassword)
             {
                 return RedirectToAction("Login");
@@ -183,6 +178,34 @@ namespace SV21T1020581.Shop.Controllers
             }
 
 
+        }
+
+        [AllowAnonymous]
+        public IActionResult Register(string username) 
+        {
+            return View(username);
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Register(string userName, string newPassword, string confirmPassword)
+        {
+            if(newPassword != confirmPassword)
+            {
+                ModelState.AddModelError(nameof(confirmPassword), "Mật khẩu không trùng khớp. Vui lòng nhập lại");
+            }
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            bool isAddedPassword = UserAccountService.ChangePassword(UserTypes.Customer, userName, newPassword);
+            if (isAddedPassword)
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }

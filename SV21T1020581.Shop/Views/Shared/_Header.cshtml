@@ -66,7 +66,7 @@
                                 }
                                 else
                                 {
-                                    <li><a class="dropdown-item" href="~/Account/Login">@User.GetUserData()?.UserName</a></li>
+                                    <li><a class="dropdown-item" href="~/Account/Login">Xin chào @User.GetUserData()?.UserName</a></li>
                                     <li><a class="dropdown-item" href="~/Account/Edit/@User.GetUserData()?.UserId">Đổi thông tin cá nhân</a></li>
                                     <li><a class="dropdown-item" href="~/Account/ChangePassword/@User.GetUserData()?.UserId">Đổi mật khẩu</a></li>
                                     <li><a class="dropdown-item text-danger" href="~/Account/Logout">Đăng xuất</a></li>
