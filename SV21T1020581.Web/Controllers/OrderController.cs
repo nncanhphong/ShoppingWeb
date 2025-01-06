@@ -182,12 +182,12 @@ namespace SV21T1020581.Web.Controllers
         {
             return View(GetShoppingCart());
         }
-        public IActionResult Accept(int id = 0)
+        public IActionResult Accept(int id = 0, int employeeID = 0)
         {
             var order = OrderDataService.GetOrder(id);
             if (order != null)
             {
-                bool result = OrderDataService.AcceptOrder(id);
+                bool result = OrderDataService.AcceptOrder(id, employeeID);
                 if (result)
                 {
                     order = OrderDataService.GetOrder(id);
@@ -217,12 +217,12 @@ namespace SV21T1020581.Web.Controllers
 
             return View("Index");
         }
-        public IActionResult Cancel(int id = 0)
+        public IActionResult Cancel(int id = 0, int employeeID = 0)
         {
             var order = OrderDataService.GetOrder(id);
             if (order != null)
             {
-                bool result = OrderDataService.CancelOrder(id);
+                bool result = OrderDataService.CancelOrder(id, employeeID);
                 if (result)
                 {
                     order = OrderDataService.GetOrder(id);
@@ -235,12 +235,12 @@ namespace SV21T1020581.Web.Controllers
 
             return View("Index");
         }
-        public IActionResult Reject(int id = 0)
+        public IActionResult Reject(int id = 0, int employeeID = 0)
         {
             var order = OrderDataService.GetOrder(id);
             if (order != null)
             {
-                bool result = OrderDataService.RejectOrder(id);
+                bool result = OrderDataService.RejectOrder(id, employeeID);
                 if (result)
                 {
                     order = OrderDataService.GetOrder(id);

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "IweZ8xrMG3HvtJ7t/qisgNWQt7snYI0t1VGLKlrBV2A=",
+  "Hash": "1tABg73OcVwQ5xyN2xt1G3VQSz2qmVDO2txD59PagX0=",
   "Source": "SV21T1020581.Web",
   "BasePath": "_content/SV21T1020581.Web",
   "Mode": "Default",
@@ -148,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\638648424289485661_evgeni-tcherkasski-TQygODn181I-unsplash.jpg"
+    },
+    {
+      "Identity": "D:\\LTUDWeb\\Trainning\\SV21T1020581\\SV21T1020581.Web\\wwwroot\\images\\customers\\no-image.jpg",
+      "SourceId": "SV21T1020581.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\LTUDWeb\\Trainning\\SV21T1020581\\SV21T1020581.Web\\wwwroot\\",
+      "BasePath": "_content/SV21T1020581.Web",
+      "RelativePath": "images/customers/no-image.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\customers\\no-image.jpg"
     },
     {
       "Identity": "D:\\LTUDWeb\\Trainning\\SV21T1020581\\SV21T1020581.Web\\wwwroot\\images\\employees\\638648440897282784_sam-quek-0VzmQPiz20M-unsplash.jpg",

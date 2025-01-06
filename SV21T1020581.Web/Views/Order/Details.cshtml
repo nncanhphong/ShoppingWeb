@@ -17,7 +17,7 @@
                 <ul class="dropdown-menu" role="menu">
                     @if (status == Constants.ORDER_INIT)
                     {
-                        <li><a href="~/Order/Accept/@Model.Order?.OrderID" onclick="return confirm('Xác nhận duyệt chấp nhận đơn hàng này?')">Duyệt đơn hàng</a></li>
+                        <li><a href="~/Order/Accept?id=@Model.Order?.OrderID&employeeID=@User.GetUserData()?.UserId" onclick="return confirm('Xác nhận duyệt chấp nhận đơn hàng này?')">Duyệt đơn hàng</a></li>
                     }
                     @if ((status == Constants.ORDER_ACCEPTED || status == Constants.ORDER_SHIPPING) && status != Constants.ORDER_SHIPPING)
                     {
@@ -31,11 +31,11 @@
                     <li class="divider"></li>
                     @if (status != Constants.ORDER_CANCEL && status != Constants.ORDER_FINISHED)
                     {
-                        <li><a href="~/Order/Cancel/@Model.Order?.OrderID" onclick="return confirm('Xác nhận hủy đơn hàng này?')">Hủy đơn hàng</a></li>
+                        <li><a href="~/Order/Cancel?id=@Model.Order?.OrderID&employeeID=@User.GetUserData()?.UserId" onclick="return confirm('Xác nhận hủy đơn hàng này?')">Hủy đơn hàng</a></li>
                     }
                     @if (status == Constants.ORDER_INIT || status == Constants.ORDER_ACCEPTED)
                     {
-                        <li><a href="~/Order/Reject/@Model.Order?.OrderID" onclick="return confirm('Xác nhận từ chối đơn hàng này?')">Từ chối đơn hàng</a></li>
+                        <li><a href="~/Order/Reject?id=@Model.Order?.OrderID&employeeID=@User.GetUserData()?.UserId" onclick="return confirm('Xác nhận từ chối đơn hàng này?')">Từ chối đơn hàng</a></li>
                     }
                     
                 </ul>

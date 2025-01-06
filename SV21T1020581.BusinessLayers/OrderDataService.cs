@@ -75,7 +75,7 @@ namespace SV21T1020581.BusinessLayers
         /// <summary>
         /// Hủy bỏ đơn hàng
         /// </summary>
-        public static bool CancelOrder(int orderID)
+        public static bool CancelOrder(int orderID, int employeeID)
         {
             Order? data = orderDB.Get(orderID);
             if (data == null)
@@ -83,7 +83,7 @@ namespace SV21T1020581.BusinessLayers
             if (data.Status != Constants.ORDER_FINISHED)
             {
                 data.Status = Constants.ORDER_CANCEL;
-
+                data.EmployeeID = employeeID;
                 data.FinishedTime = DateTime.Now;
                 return orderDB.Update(data);
             }
@@ -92,7 +92,7 @@ namespace SV21T1020581.BusinessLayers
         /// <summary>
         /// Từ chối đơn hàng
         /// </summary>
-        public static bool RejectOrder(int orderID)
+        public static bool RejectOrder(int orderID, int employeeID)
         {
             Order? data = orderDB.Get(orderID);
             if (data == null)
@@ -101,6 +101,7 @@ namespace SV21T1020581.BusinessLayers
             {
                 data.Status = Constants.ORDER_REJECTED;
                 data.FinishedTime = DateTime.Now;
+                data.EmployeeID = employeeID;
                 return orderDB.Update(data);
             }
             return false;
@@ -108,7 +109,7 @@ namespace SV21T1020581.BusinessLayers
         /// <summary>
         /// Duyệt chấp nhận đơn hàng
         /// </summary>
-        public static bool AcceptOrder(int orderID)
+        public static bool AcceptOrder(int orderID, int employeeID)
         {
             Order? data = orderDB.Get(orderID);
             if (data == null)
@@ -116,6 +117,7 @@ namespace SV21T1020581.BusinessLayers
             if (data.Status == Constants.ORDER_INIT)
             {
                 data.Status = Constants.ORDER_ACCEPTED;
+                data.EmployeeID = employeeID;
                 data.AcceptTime = DateTime.Now;
                 return orderDB.Update(data);
             }

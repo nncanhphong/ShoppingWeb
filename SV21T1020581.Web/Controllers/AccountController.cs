@@ -10,6 +10,8 @@ namespace SV21T1020581.Web.Controllers
     public class AccountController : Controller
     {
         private const string USER_DATA = "UserData";
+
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()

@@ -58,6 +58,7 @@ D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\SV21T102058
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\SV21T1020581.Shop.MvcApplicationPartsAssemblyInfo.cache
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\SV21T1020581.Shop.RazorAssemblyInfo.cache
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\SV21T1020581.Shop.RazorAssemblyInfo.cs
+D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\SV21T1020581.Shop.sourcelink.json
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\staticwebassets.build.json
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\staticwebassets.development.json
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\staticwebassets\msbuild.SV21T1020581.Shop.Microsoft.AspNetCore.StaticWebAssets.props
@@ -74,4 +75,3 @@ D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\refint\SV21
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\SV21T1020581.Shop.pdb
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\SV21T1020581.Shop.genruntimeconfig.cache
 D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\ref\SV21T1020581.Shop.dll
-D:\LTUDWeb\Trainning\SV21T1020581\SV21T1020581.Shop\obj\Debug\net8.0\SV21T1020581.Shop.sourcelink.json

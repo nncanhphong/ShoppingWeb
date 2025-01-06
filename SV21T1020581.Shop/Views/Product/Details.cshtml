@@ -1,59 +1,69 @@
 ﻿@model Product
 
-<!-- Product Detail Container -->
-<div class="container my-5">
+<div class="container my-4">
     <div class="row">
-        <!-- Product Image and Carousel -->
-        <div class="col-md-6">
-            <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <!-- Main Product Photo -->
-                    <div class="carousel-item active">
-                        <img src="http://localhost:5028/images/products/@(string.IsNullOrWhiteSpace(Model.Photo) ? "no-image.jpg" : Model.Photo)" class="d-block w-100 rounded" alt="@Model.ProductName">
-                    </div>
-                    <!-- Additional Photos -->
-                    @foreach (var item in ProductDataService.ListPhotos(Model.ProductID))
-                    {
-                        <div class="carousel-item">
-                            <img src="http://localhost:5028/images/products/@(string.IsNullOrWhiteSpace(item.Photo) ? "no-image.jpg" : item.Photo)" class="d-block w-100 rounded" alt="Additional Photo">
+        <form action="~/Order/AddToCart" method="post" class="row">
+            <div class="col m-6">
+                <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="http://localhost:5028/images/products/@(string.IsNullOrWhiteSpace(Model.Photo) ? "no-image.jpg" : Model.Photo)" class="d-block w-100 rounded" alt="@Model.ProductName">
                         </div>
-                    }
+                        @foreach (var item in ProductDataService.ListPhotos(Model.ProductID))
+                        {
+                            <div class="carousel-item">
+                                <img src="http://localhost:5028/images/products/@(string.IsNullOrWhiteSpace(item.Photo) ? "no-image.jpg" : item.Photo)" class="d-block w-100 rounded" alt="Additional Photo">
+                            </div>
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
-                <!-- Carousel Controls -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
-        </div>
 
-        <!-- Product Details -->
-        <div class="col-md-6">
-            <h2 class="fw-bold mb-3">@Model.ProductName</h2>
-            <p class="text-muted">@Model.ProductDescription</p>
+            <div class="col m-6">
+                <input type="hidden" name="id" value="@Model.ProductID" />
+                <h2 class="fw-bold mb-3">@Model.ProductName</h2>
+                <p class="text-muted">@Model.ProductDescription</p>
 
-            <h4 class="text-danger fw-bold mb-3">
-                Giá: @Model.Price.ToString("N0") VND
-            </h4>
+                <h4 class="text-danger fw-bold mb-3">
+                    Giá: @Model.Price.ToString("N0") VND
+                </h4>
+                <div class="row">
+                    <div class="col">
+                        <p><strong>Đơn vị:</strong> @Model.Unit</p>
+                    </div>
+                    <div class="col">
+                        @foreach (var item in ProductDataService.ListAttribute(Model.ProductID))
+                        {
+                            <p><strong>@item.AttributeName:</strong> @item.AttributeValue</p>
+                        }
+                    </div>
+                </div>
+               
+                <div class="row">
+                    <div class="col">
+                        <p><strong>Số lượng:</strong></p>
+                    </div>
+                    <div class="col">
+                        <input class="text-center round-3 number-separator" type="number" name="quantity" min="1" step="1" placeholder="1" />
+                    </div>
+                    
+                </div>
 
-            <p><strong>Đơn vị:</strong> @Model.Unit</p>
-
-            <!-- Attributes -->
-            @foreach (var item in ProductDataService.ListAttribute(Model.ProductID))
-            {
-                <p><strong>@item.AttributeName:</strong> @item.AttributeValue</p>
-            }
-
-            <!-- Add to Cart Button -->
-            <div class="mt-4">
-                <a href="~/Order/AddToCart/@Model.ProductID" class="btn btn-success btn-lg px-4">
-                    <i class="bi bi-cart"></i> Đặt hàng
-                </a>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success btn-lg px-4">
+                        <i class="bi bi-cart"></i> Đặt hàng
+                    </button>
+                </div>
             </div>
-        </div>
+        </form>
+        
     </div>
 </div>

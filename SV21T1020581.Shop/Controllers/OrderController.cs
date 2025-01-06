@@ -35,12 +35,12 @@ namespace SV21T1020581.Shop.Controllers
         /// Giỏ hàng
         /// </summary>
         /// <returns></returns>
-        public IActionResult AddToCart(int id = 0)
+        public IActionResult AddToCart(int id = 0, int quantity = 1)
         {
             var data = ProductDataService.GetProduct(id);
             if(data == null)
             {
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Index", "Home");
             }
             var newCartItem = new CartItem
             {
@@ -48,7 +48,7 @@ namespace SV21T1020581.Shop.Controllers
                 ProductName = data.ProductName,
                 Photo = data.Photo,
                 Unit = data.Unit,
-                Quantity = 1,
+                Quantity = quantity,
                 SalePrice = data.Price,
             };
 
@@ -107,10 +107,9 @@ namespace SV21T1020581.Shop.Controllers
             }
             int orderID = OrderDataService.InitOrder(BOT_EMPLOYEE, customerID, city, address, orderDetails);
             var data = OrderDataService.GetOrder(orderID);
-            return View("OrderStatus");
+            return RedirectToAction("OrderStatus");
         }
 
-        //TODO: Chưa xong
         /// <summary>
         /// Tình trạng vận chuyển của đơn hàng
         /// </summary>

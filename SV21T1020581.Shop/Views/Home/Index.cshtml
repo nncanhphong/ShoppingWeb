@@ -1,9 +1,11 @@
 ﻿@{
     int countProduct = 1;
+    var searchInput = new ProductSearchInput();
+    var categoryID = 0;
 }
 
 <body>
-    <!-- Hero Section -->
+    
     <section class="bg-success text-white text-center py-5">
         <div class="container">
             <h1 class="display-4">Trung tâm thương mại</h1>
@@ -12,32 +14,38 @@
         </div>
     </section>
 
-    <!-- Categories Section with Carousel -->
+    
     <section class="py-5">
         <div class="container">
             <h2 class="text-center mb-5">Loại hàng</h2>
             <div id="categoriesCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-                <!-- Carousel Indicators -->
+                
                 <div class="carousel-indicators">
+
                     @for (int i = 0; i < Math.Ceiling(CommonDataService.ListOfCategories().Count() / 4.0); i++)
                     {
-                        <button type="button" data-bs-target="#categoriesCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-current="@(i == 0 ? "true" : "false")"></button>
+                        
+                        <button type="button" data-bs-target="#categoriesCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-current="@(i == 0 ? "true" : "false")">
+
+                        </button>
                     }
                 </div>
 
-                <!-- Carousel Items -->
+                
                 <div class="carousel-inner">
                     @{
                         var categories = CommonDataService.ListOfCategories().ToList();
+                        
                         for (int i = 0; i < categories.Count(); i += 4)
                         {
+                            categoryID = CommonDataService.ListOfCategories().ElementAt(i).CategoryID;
                             <div class="carousel-item @(i == 0 ? "active" : "")">
                                 <div class="row text-center g-4">
                                     @for (int j = i; j < Math.Min(i + 4, categories.Count()); j++)
                                     {
                                         <div class="col-6 col-md-3">
                                             <div class="bg-light py-4 rounded shadow-sm">
-                                                <h5 class="fw-bold">@categories[j].CategoryName</h5>
+                                                <h5 class="fw-bold" onclick="window.location.href='/Product/Index/@searchInput{CategoryID = @categoryID }'">@categories[j].CategoryName</h5>
                                             </div>
                                         </div>
                                     }
@@ -47,7 +55,7 @@
                     }
                 </div>
 
-                <!-- Carousel Controls -->
+                
                 <button class="carousel-control-prev" type="button" data-bs-target="#categoriesCarousel" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
@@ -70,19 +78,18 @@
                     {
                         <div class="col-sm-6 col-md-4 col-lg-3">
                             <div class="card h-100 shadow-sm">
-                                <!-- Product Image -->
+                                
                                 <img src="http://localhost:5028/images/products/@(string.IsNullOrWhiteSpace(item.Photo) ? "no-image.jpg" : item.Photo)"
-                                     class="card-img-top" alt="@item.ProductName">
+                                     class="card-img-top" alt="@item.ProductName" style="height: 150px" onclick="window.location.href='/Product/Details/@item.ProductID'">
 
-                                <!-- Product Details -->
+                                
                                 <div class="card-body d-flex flex-column text-center">
-                                    <h5 class="card-title text-truncate">@item.ProductName</h5>
-                                    <p class="card-text text-primary fw-bold">@item.Price.ToString("N0") VND</p>
+                                    <h5 class="card-title" style="height: 120px">@item.ProductName</h5>
+                                    <p class="card-text text-primary fw-bold">@item.Price.ToString("#,0", System.Globalization.CultureInfo.InvariantCulture).Replace(",", ".") VND</p>
                                 </div>
 
-                                <!-- Card Footer -->
                                 <div class="card-footer bg-light text-center">
-                                    <a href="~/Order/AddToCart/@item.ProductID" class="btn btn-sm btn-success me-2">
+                                    <a href="~/Order/AddToCart?id=@item.ProductID" class="btn btn-sm btn-success me-2">
                                         <i class="bi bi-cart"></i> Thêm vào giỏ
                                     </a>
                                 </div>

@@ -4,15 +4,15 @@
 
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="card shadow-lg border-0 rounded-3" style="max-width: 400px; width: 100%;">
-        <div class="card-header bg-primary text-white text-center">
-            <h5 class="mb-0">Đăng Ký Mật Khẩu</h5>
+        <div class="card-header bg-success text-white text-center">
+            <h5 class="mb-0">Tạo Mật Khẩu</h5>
         </div>
         <div class="card-body p-4">
             <form action="~/Account/Register" method="post">
-                <!-- Hidden Input for Username -->
+                
                 <input type="hidden" name="userName" value="@Model" />
 
-                <!-- Password -->
+                
                 <div class="mb-3">
                     <label class="form-label fw-bold">Nhập mật khẩu</label>
                     <input type="password" class="form-control" name="newPassword"
@@ -21,7 +21,7 @@
                     @Html.ValidationMessage("password", new { @class = "text-danger small" })
                 </div>
 
-                <!-- Confirm Password -->
+               
                 <div class="mb-3">
                     <label class="form-label fw-bold">Nhập lại mật khẩu</label>
                     <input type="password" class="form-control" name="confirmPassword"
@@ -30,9 +30,9 @@
                     @Html.ValidationMessage("confirmPassword", new { @class = "text-danger small" })
                 </div>
 
-                <!-- Submit Button -->
+                
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary px-4 py-2">
+                    <button type="submit" class="btn btn-success px-4 py-2">
                         Lưu
                     </button>
                 </div>

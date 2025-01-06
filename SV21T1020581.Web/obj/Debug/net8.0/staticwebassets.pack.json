@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets\\images\\638648424289485661_evgeni-tcherkasski-TQygODn181I-unsplash.jpg"
     },
     {
+      "Id": "D:\\LTUDWeb\\Trainning\\SV21T1020581\\SV21T1020581.Web\\wwwroot\\images\\customers\\no-image.jpg",
+      "PackagePath": "staticwebassets\\images\\customers\\no-image.jpg"
+    },
+    {
       "Id": "D:\\LTUDWeb\\Trainning\\SV21T1020581\\SV21T1020581.Web\\wwwroot\\images\\employees\\638648440897282784_sam-quek-0VzmQPiz20M-unsplash.jpg",
       "PackagePath": "staticwebassets\\images\\employees\\638648440897282784_sam-quek-0VzmQPiz20M-unsplash.jpg"
     },
