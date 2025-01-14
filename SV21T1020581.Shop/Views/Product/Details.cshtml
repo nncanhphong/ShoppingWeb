@@ -46,22 +46,35 @@
                         }
                     </div>
                 </div>
-               
-                <div class="row">
-                    <div class="col">
-                        <p><strong>Số lượng:</strong></p>
-                    </div>
-                    <div class="col">
-                        <input class="text-center round-3 number-separator" type="number" name="quantity" min="1" step="1" placeholder="1" />
-                    </div>
-                    
-                </div>
+                
 
-                <div class="mt-4">
-                    <button type="submit" class="btn btn-success btn-lg px-4">
-                        <i class="bi bi-cart"></i> Đặt hàng
-                    </button>
-                </div>
+                
+
+                @if(Model.IsSelling == true)
+                {
+                    <div class="row">
+                        <div class="col">
+                            <p><strong>Số lượng:</strong></p>
+                        </div>
+                        <div class="col">
+                            <input class="text-center round-3 number-separator" type="number" name="quantity" min="1" step="1" placeholder="1" />
+                        </div>
+
+                    </div>
+
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-success btn-lg px-4">
+                            <i class="bi bi-cart"></i> Đặt hàng
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="mt-4">
+                        <p class="text-center text-danger">Mặt hàng hiện không có sẵn</p>
+                    </div>
+                }
             </div>
         </form>
         

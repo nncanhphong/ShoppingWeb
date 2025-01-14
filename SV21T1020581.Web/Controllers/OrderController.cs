@@ -167,7 +167,9 @@ namespace SV21T1020581.Web.Controllers
             var shoppingCart = GetShoppingCart();
             int index = shoppingCart.FindIndex(m => m.ProductID == id);
             if (index > 0)
+            {
                 shoppingCart.RemoveAt(index);
+            }
             ApplicationContext.SetSessionData(SHOPPING_CART, shoppingCart);
             return Json("");
         }

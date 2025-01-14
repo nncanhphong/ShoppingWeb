@@ -4,7 +4,6 @@
 }
 
 <div class="row mt-4">
-    <!-- Left Section: Customer Information -->
     <div class="col-lg-7 mb-4">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
@@ -12,12 +11,13 @@
             </div>
             <div class="card-body">
                 <form action="~/Order/Payment" method="post">
-                    <!-- Address Input -->
+                    
                     <div class="mb-3">
                         <label for="address" class="form-label fw-bold">Địa chỉ</label>
-                        <input type="text" name="address" id="address" class="form-control" placeholder="Nhập địa chỉ" required>
+                        <input type="text" name="address" id="address" class="form-control" placeholder="Nhập địa chỉ">
+                        @Html.ValidationMessage("address", new { @style = "color:#f00" })
                     </div>
-                    <!-- City Dropdown -->
+                    
                     <div class="mb-3">
                         <label for="city" class="form-label fw-bold">Thành phố</label>
                         <select name="city" id="city" class="form-select" required>
@@ -27,8 +27,9 @@
                                 <option value="@item.ProvinceName">@item.ProvinceName</option>
                             }
                         </select>
+                        @Html.ValidationMessage("city", new { @style = "color:#f00" })
                     </div>
-                    <!-- Submit Button -->
+                    
                     <button type="submit" class="btn btn-success w-100">Xác nhận</button>
                 </form>
             </div>

@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<CartItem>
 @{
     Layout = null;
+
     int stt = 0;
     decimal sumOfPrice = 0;
 }
@@ -17,9 +18,9 @@
         </tr>
     </thead>
     <tbody>
-        @if(Model.Count() > 0)
+        @if (Model.Count() > 0)
         {
-            @foreach(var item in Model)
+            foreach (var item in Model)
             {
                 sumOfPrice += item.TotalPrice;
                 <tr>
@@ -30,9 +31,11 @@
                     <td class="text-right">@item.SalePrice.ToString("N0")</td>
                     <td class="text-right">@item.TotalPrice.ToString("N0")</td>
                     <td class="text-right">
-                        <a href="~/Order/RemoveFromCart/@item.ProductID" class="btn btn-xs btn-danger ajax-link" onclick="return confirm('Xoá mặt hàng @item.ProductName ra khỏi giỏ hàng ?')">
-                            <i class="fa fa-minus"></i>
-                        </a>
+                        <a href="~/Order/RemoveFromCart/@item.ProductID" 
+                           class="btn btn-xs btn-danger ajax-link">
+                           <i class="fa fa-minus"></i>
+                        </a> 
+                        
                     </td>
                 </tr>
             }
@@ -56,7 +59,7 @@
     </tfoot>
 </table>
 <div class="text-right">
-    <a href="~/Order/ClearCart" class="btn btn-sm btn-danger ajax-link" onclick="return confirm('Có muốn xóa giỏ hàng không?')">
+    <a href="~/Order/ClearCart" class="btn btn-sm btn-danger ajax-link1">
         <i class="fa fa-trash"></i> Xóa giỏ hàng
     </a>
 </div>
@@ -65,20 +68,39 @@
     $(document).ready(function () {
         $(".ajax-link").click(function (e) {
             e.preventDefault();
+            
+            if (confirm('Xóa mặt hàng này ra khỏi giỏ?')){
+                $.ajax({
+                    url: $(this).prop("href"),
+                    type: "GET",
+                    success: function (data) {
+                        if (data !== "") {
+                            alert(data);
+                        }
+                        else {
+                            showShoppingCart();
+                        }
+                    }
+                });
+            }
+        });
+        $(".ajax-link1").click(function (e) {
+            e.preventDefault();
 
-            $.ajax({
-                url: $(this).prop("href"),
-                type: "GET",
-                success: function (data) {
-                    if (data !== "") {
-                        alert(data);
+            if (confirm('Bạn có muốn xóa giỏ hàng này không?')) {
+                $.ajax({
+                    url: $(this).prop("href"),
+                    type: "GET",
+                    success: function (data) {
+                        if (data !== "") {
+                            alert(data);
+                        }
+                        else {
+                            showShoppingCart();
+                        }
                     }
-                    else {
-                        showShoppingCart();
-                    }
-                }
-            });
+                });
+            }
         });
     });
-
 </script>

@@ -5,13 +5,13 @@
 <div class="container mt-4">
     @if (Model.ListOrder.Any())
     {
-        @foreach (var item in Model.ListOrder)
+        @foreach (var item in Model.ListOrder.AsEnumerable().Reverse())
         {
             <div class="card shadow mb-4 position-relative">
-                <!-- Card Body -->
+
                 <div class="card-body">
                     <div class="row">
-                        <!-- Column 1: Image -->
+
                         <div class="col-md-3 text-center">
                             <div class="mb-3">
                                 <label class="fw-bold">Mặt hàng:</label>
@@ -23,7 +23,7 @@
                             
                         </div>
 
-                        <!-- Column 2: Customer Information -->
+
                         <div class="col-md-5">
                             <div class="mb-3">
                                 <label class="fw-bold">Tên khách hàng:</label>
@@ -39,7 +39,7 @@
                             </div>
                         </div>
 
-                        <!-- Column 3: Order Details -->
+
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label class="fw-bold">Thành phố:</label>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- View Details Button -->
+
                 <div class="card-footer bg-light d-flex justify-content-end">
                     <a href="~/Order/Details/@item?.Order?.OrderID" class="btn btn-sm btn-success">
                         Xem chi tiết

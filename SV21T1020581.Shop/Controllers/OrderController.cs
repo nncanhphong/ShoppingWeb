@@ -78,6 +78,15 @@ namespace SV21T1020581.Shop.Controllers
             ApplicationContext.SetSessionData(SHOPPING_CART, shoppingCart);
             return Json("");
         }
+
+        public IActionResult ClearCart()
+        {
+            var shoppingCart = GetShoppingCart();
+            shoppingCart.Clear();
+            ApplicationContext.SetSessionData(SHOPPING_CART, shoppingCart);
+            return Json("");
+        }
+
         /// <summary>
         /// View Shopping Cart
         /// </summary>
@@ -93,6 +102,19 @@ namespace SV21T1020581.Shop.Controllers
         /// <returns></returns>
         public IActionResult Payment(string city, string address) 
         {
+            if (String.IsNullOrWhiteSpace(city))
+            {
+                ModelState.AddModelError("city", "Tên thành phố không được rỗng");
+            }
+            if (String.IsNullOrWhiteSpace(address))
+            {
+                ModelState.AddModelError("address", "Vui lòng nhập địa chỉ");
+            }
+            if (!ModelState.IsValid)
+            {
+                return View("CheckOut", GetShoppingCart());
+            }
+
             var shoppingCart = GetShoppingCart();
             int customerID = Convert.ToInt32(User.GetUserData()?.UserId);
             List<OrderDetail> orderDetails = new List<OrderDetail>();
@@ -106,6 +128,10 @@ namespace SV21T1020581.Shop.Controllers
                 });
             }
             int orderID = OrderDataService.InitOrder(BOT_EMPLOYEE, customerID, city, address, orderDetails);
+            if(orderID > 0)
+            {
+                ClearCart();
+            }
             var data = OrderDataService.GetOrder(orderID);
             return RedirectToAction("OrderStatus");
         }
